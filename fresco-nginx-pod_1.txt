@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fresco-nginx-pod
+spec:
+  containers:
+  - name: fresco-nginx-container
+    image: nginx
+    env:
+    - name: SERVER_URL_ENV
+      valueFrom:
+        configMapKeyRef:
+           name: fresco-config
+           key: SERVER_URL
+    volumeMounts:
+    - name: fresco-secret
+      mountPath: "/etc/test"
+  volumes:
+  - name: fresco-secret
+    secret:
+      secretName: fresco-secret
